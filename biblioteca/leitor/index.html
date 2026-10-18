@@ -11,10 +11,11 @@ button,input,select,textarea{font-family:inherit}
 button{cursor:pointer}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #2ae0ef;outline-offset:2px}
 @media(max-width:600px){header{padding:9px 12px!important}header strong,header .brand{font-size:13px}header a[href]{font-size:12px;padding:6px 8px}}
+.controls{height:auto;min-height:58px;flex-wrap:wrap;column-gap:10px;row-gap:5px;padding:8px 10px}.copyrightReader{flex-basis:100%;text-align:center;font-size:10px;color:#aebccc;line-height:1.35}.stage{height:calc(100dvh - 136px)}.reading .stage{height:calc(100dvh - 84px)}@media(max-width:600px){.stage{height:calc(100dvh - 140px)}.copyrightReader{font-size:9px}}
 </style></head><body>
 <header><div class="bar"><a href="../index.html">← Biblioteca</a><strong id="title"><img src="https://elisonborges.github.io/anna-one/assets/anna-symbol.svg" alt="Logo AnnA One" width="30" height="30" style="display:block;flex-shrink:0">Leitor Digital</strong><a id="original" class="original" target="_blank" rel="noopener">Abrir PDF original ↗</a></div></header>
 <main class="stage"><div id="loading" class="loading">Preparando as páginas do e-book...</div><div id="book"></div></main>
-<div class="controls"><button class="tool" onclick="prev()">← Anterior</button><span id="count" class="count">—</span><button class="tool" onclick="next()">Próxima →</button><button id="readBtn" class="tool" onclick="reading()">▣ Modo leitura</button></div>
+<div class="controls"><button class="tool" onclick="prev()">← Anterior</button><span id="count" class="count">—</span><button class="tool" onclick="next()">Próxima →</button><button id="readBtn" class="tool" onclick="reading()">▣ Modo leitura</button><div class="copyrightReader">© 2026 Elison Borges · Todos os direitos reservados</div></div>
 <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 <script type="module">
 import * as pdfjsLib from 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.min.mjs';
