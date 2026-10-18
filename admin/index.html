@@ -31,6 +31,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 <header><div class="head"><strong><img src="https://elisonborges.github.io/anna-one/assets/anna-symbol.svg" alt="Logo AnnA One" width="30" height="30" style="display:block;flex-shrink:0">AnnA One · Administração</strong><div class="session"><span id="sessionEmail"></span><button id="logoutBtn" class="logout" style="display:none" onclick="logout()">Sair</button><a href="../index.html">← Voltar</a></div></div></header>
 <section id="auth" class="auth-shell"><div class="auth-card"><h1>🔐 Acesso administrativo</h1><p>Entre com sua conta para acessar o Painel Administrativo de Projetos Escolares.</p><label>E-mail</label><input id="authEmail" type="email" autocomplete="email" value="francisco.borges@dombarreto.g12.br"><label>Senha</label><input id="authPassword" type="password" autocomplete="current-password" placeholder="Sua senha"><button class="btn primary" onclick="login()">Entrar</button><button class="btn soft" onclick="signup()">Criar primeiro acesso</button><div id="authStatus" class="auth-status"></div><div class="auth-help">A senha é processada pelo Supabase Auth e não fica armazenada no código do site.</div></div></section>
 <div id="app"><main><div class="title"><div><h1>Painel Administrativo</h1><p>Gerencie a estrutura escolar, professores e projetos disponíveis para entrega.</p></div></div>
+<div class="card" style="margin-bottom:16px"><div class="toolbar"><h2>Diagnóstico de e-mail</h2><button class="btn soft" id="testEmailBtn" onclick="testAdminEmail()">Enviar e-mail de teste</button></div><p style="font-size:13px">Envio único para a caixa de teste configurada no servidor. Não altera submissões.</p><div id="testEmailStatus" role="status" aria-live="polite" style="font-size:13px"></div></div>
 <nav class="tabs"><button class="tab on" data-tab="estrutura">🏫 Estrutura escolar</button><button class="tab" data-tab="projetos">📚 Projetos</button><button class="tab" data-tab="usuarios">👥 Usuários</button><button class="tab" data-tab="armazenamento">📊 Uso e Armazenamento</button></nav>
 <section class="panel on" id="estrutura">
 <div class="stats"><div class="stat"><b id="sUnits">1</b><span>Unidade</span></div><div class="stat"><b>2</b><span>Turnos</span></div><div class="stat"><b>1</b><span>Ano cadastrado</span></div><div class="stat"><b id="sClasses">8</b><span>Turmas</span></div></div>
@@ -53,6 +54,30 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 const SUPABASE_URL='https://wdlmfjxyuwgdiyukmpir.supabase.co';
 const SUPABASE_KEY='sb_publishable_F2HfP-vkw7rLYSP-5oPTzQ_XMe_9O86';
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+async function testAdminEmail(){
+  const button=document.getElementById('testEmailBtn');
+  const status=document.getElementById('testEmailStatus');
+  if(button.disabled)return;
+  if(!confirm('Enviar UM e-mail de teste para o destinatário fixo da função test-project-email?'))return;
+  button.disabled=true;
+  status.textContent='Enviando teste...';
+  try{
+    const {data:{session},error:sessionError}=await sb.auth.getSession();
+    if(sessionError||!session)throw new Error('Sessão expirada. Entre novamente no painel.');
+    const {data,error}=await sb.functions.invoke('test-project-email',{body:{type:'test'}});
+    if(error){
+      const response=error.context;
+      let details='';
+      if(response&&typeof response.json==='function'){
+        try{const payload=await response.json();details=payload.error||payload.message||'';}catch(_e){}
+      }
+      throw new Error(details||error.message||'Falha no teste');
+    }
+    if(!data||data.ok!==true)throw new Error(data?.error||'Resposta inesperada do servidor');
+    status.textContent='Resend aceitou o envio (ID: '+String(data.id||'indisponível')+'). Confirme o recebimento na caixa de teste.';
+  }catch(e){status.textContent='Não foi possível enviar: '+String(e.message||e);}
+  finally{button.disabled=false;}
+}
 const authStatus=document.getElementById('authStatus');
 function authMessage(msg,ok=false){authStatus.textContent=msg;authStatus.style.color=ok?'#147d64':'#a5312b'}
 async function signup(){const email=document.getElementById('authEmail').value.trim();const password=document.getElementById('authPassword').value;if(!email||password.length<6)return authMessage('Informe o e-mail e uma senha com pelo menos 6 caracteres.');authMessage('Criando acesso...');const {data,error}=await sb.auth.signUp({email,password,options:{data:{display_name:'Francisco Borges'}}});if(error)return authMessage(error.message);if(data.session){await openSession(data.session.user);return}authMessage('Cadastro criado. Verifique seu e-mail para confirmar o acesso.',true)}
