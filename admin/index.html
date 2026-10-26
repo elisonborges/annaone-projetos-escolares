@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Administração — Projetos Escolares</title>
+<title>Administração — Projetos Escolares</title><link rel="icon" href="https://elisonborges.github.io/anna-one/assets/anna-symbol.svg" type="image/svg+xml">
 <style>
 *{box-sizing:border-box}:root{--blue:#1769aa;--navy:#102b4e;--ink:#183153;--muted:#6d8095;--line:#dbe5ef;--bg:#f3f6fa;--green:#147d64}
 body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}
@@ -27,8 +27,20 @@ button,input,select,textarea{font-family:inherit}
 button{cursor:pointer}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #2ae0ef;outline-offset:2px}
 @media(max-width:600px){header{padding:9px 12px!important}header strong,header .brand{font-size:13px}header a[href]{font-size:12px;padding:6px 8px}}
+
+/* Identidade institucional AnnA One — Projetos Escolares */
+:root{--anna-navy:#0c2646;--anna-blue:#1769aa;--anna-bg:#f3f6fa;--anna-ink:#17304d;--anna-line:#dce6f0}
+body{font-family:Inter,"Segoe UI",Arial,sans-serif}
+header{background:#0c2646;color:#fff;border-bottom:3px solid #1769aa}
+header strong,header .brand{display:flex;align-items:center;gap:10px;min-width:0}
+header .anna-brand-copy{display:flex;flex-direction:column;line-height:1.15;gap:3px}
+header .anna-brand-name{font-size:16px;font-weight:850;letter-spacing:.1px;color:#fff}
+header .anna-brand-copy small{font-size:10px;font-weight:750;letter-spacing:1.15px;color:#cfe5f8}
+header a{color:#d9efff}
+header img[alt="Logo AnnA One"]{width:34px;height:34px;flex-shrink:0}
+@media(max-width:540px){header .anna-brand-name{font-size:14px}header .anna-brand-copy small{font-size:9px;letter-spacing:.5px}header img[alt="Logo AnnA One"]{width:30px;height:30px}}
 </style></head><body>
-<header><div class="head"><strong><img src="https://elisonborges.github.io/anna-one/assets/anna-symbol.svg" alt="Logo AnnA One" width="30" height="30" style="display:block;flex-shrink:0">AnnA One · Administração</strong><div class="session"><span id="sessionEmail"></span><button id="logoutBtn" class="logout" style="display:none" onclick="logout()">Sair</button><a href="../index.html">← Voltar</a></div></div></header>
+<header><div class="head"><strong><img src="https://elisonborges.github.io/anna-one/assets/anna-symbol.svg" alt="Logo AnnA One" width="30" height="30" style="display:block;flex-shrink:0"><span class="anna-brand-copy"><span class="anna-brand-name">AnnA One</span><small>PROJETOS ESCOLARES · ADMINISTRAÇÃO</small></span></strong><div class="session"><span id="sessionEmail"></span><button id="logoutBtn" class="logout" style="display:none" onclick="logout()">Sair</button><a href="../index.html">← Voltar</a></div></div></header>
 <section id="auth" class="auth-shell"><div class="auth-card"><h1>🔐 Acesso administrativo</h1><p>Entre com sua conta para acessar o Painel Administrativo de Projetos Escolares.</p><label>E-mail</label><input id="authEmail" type="email" autocomplete="email" value="francisco.borges@dombarreto.g12.br"><label>Senha</label><input id="authPassword" type="password" autocomplete="current-password" placeholder="Sua senha"><button class="btn primary" onclick="login()">Entrar</button><button class="btn soft" onclick="signup()">Criar primeiro acesso</button><div id="authStatus" class="auth-status"></div><div class="auth-help">A senha é processada pelo Supabase Auth e não fica armazenada no código do site.</div></div></section>
 <div id="app"><main><div class="title"><div><h1>Painel Administrativo</h1><p>Gerencie a estrutura escolar, professores e projetos disponíveis para entrega.</p></div></div>
 <div class="card" style="margin-bottom:16px"><div class="toolbar"><h2>Diagnóstico de e-mail</h2><label for="testEmailType" style="font-size:13px">Modelo:</label><select id="testEmailType" aria-label="Modelo de e-mail de teste"><option value="test">Diagnóstico geral</option><option value="submitted">Entrega recebida (prévia fictícia)</option><option value="changes">Correção solicitada (prévia fictícia)</option></select><button class="btn soft" id="testEmailBtn" onclick="testAdminEmail()">Enviar e-mail de teste</button></div><p style="font-size:13px">Envio único para a caixa de teste configurada no servidor. Não altera submissões.</p><div id="testEmailStatus" role="status" aria-live="polite" style="font-size:13px"></div></div>
