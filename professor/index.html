@@ -26,7 +26,7 @@ header img[alt="Logo AnnA One"]{width:34px;height:34px;flex-shrink:0}
 </style></head><body>
 <header><div class="head"><strong><img src="https://elisonborges.github.io/anna-one/assets/anna-symbol.svg" alt="Logo AnnA One" width="30" height="30" style="display:block;flex-shrink:0"><span class="anna-brand-copy"><span class="anna-brand-name">AnnA One</span><small>PROJETOS ESCOLARES · ÁREA DO PROFESSOR</small></span></strong><div class="actions"><span id="sessionEmail"></span><button id="logoutBtn" class="logout" style="display:none" onclick="logout()">Sair</button><a href="../index.html">← Voltar</a></div></div></header>
 <section id="auth" class="auth"><h1>🔐 Acesso do Professor</h1><p>Entre com sua conta para acessar os projetos e turmas sob sua responsabilidade.</p><label>E-mail</label><input id="email" type="email" autocomplete="email"><label>Senha</label><input id="password" type="password" autocomplete="current-password"><button class="btn primary" onclick="login()">Entrar</button><button class="btn soft" style="width:100%;margin-top:9px" onclick="signup()">Criar primeiro acesso</button><div id="status" class="status"></div><p class="muted">Use o mesmo e-mail que foi autorizado pela Administração.</p></section>
-<main id="app" class="wrap"><div class="top"><div><h1>Minhas turmas e projetos</h1><div class="muted" id="welcome"></div></div><span class="badge">ACESSO DO PROFESSOR</span></div><div class="workspace"><aside class="side"><div id="projectName" class="projectTitle">Projeto</div><h3>🏫 Turmas</h3><div id="classNav"></div><button class="btn" style="width:100%;margin-top:14px;white-space:normal" onclick="document.getElementById('rosterCheck').scrollIntoView({behavior:'smooth',block:'start'})">📋 Conferir entregas por turma</button></aside><section class="deliveryMain"><div id="deliveryView" class="deliveryView"><div class="deliveryHead"><h2>📥 Entregas recebidas</h2><div class="reportActions"><button class="btn reportBtn" onclick="openReport()">📊 Relatório</button><button class="btn reportBtn" style="margin-left:8px" onclick="document.getElementById('rosterCheck').scrollIntoView({behavior:'smooth',block:'start'})">📋 Conferir entregas</button></div></div><div id="filters" class="filters"></div><div id="bulkPublishBar" style="display:none;background:#edf7f4;border:1px solid #a6d6c5;border-radius:10px;padding:12px;margin:12px 0"><label style="display:inline-flex;align-items:center;gap:7px;margin:0"><input type="checkbox" id="bulkSelectAll" onchange="toggleAllApproved(this.checked)" style="width:auto"> Selecionar todas as aprovadas neste filtro</label><span id="bulkCount" style="margin:0 10px;font-size:13px">0 selecionadas</span><button class="btn publish" id="bulkPublishBtn" onclick="publishSelected()" disabled>📚 Publicar selecionadas</button><p class="muted" style="margin:7px 0 0">A publicação depende da liberação da Biblioteca Digital pela Administração. Apenas obras aprovadas serão processadas.</p></div><div id="reviewSuccessNotice" role="status" aria-live="polite" style="display:none;background:#e4f7ee;border-left:5px solid #087b61;color:#075c43;border-radius:8px;padding:14px 16px;margin:12px 0 16px;line-height:1.6"></div><div id="deliveries" class="deliveries"><div class="loading">Carregando entregas...</div></div></div><div id="report" class="report"></div></section></div><section id="rosterCheck" style="background:white;border:1px solid #d6e1eb;border-radius:14px;padding:18px;margin-top:18px"><h2>📋 Conferência de Entregas por Turma</h2><p class="muted">Listas privadas carregadas automaticamente. Dados transcritos: confira possíveis divergências antes de cobrar alunos.</p><select id="rosterClass" onchange="renderRosterCheck()" style="display:block;margin:12px 0"></select><div id="rosterResult">Carregando listas privadas...</div></section><footer id="teacherFooter" style="text-align:center;margin:28px 0 8px;color:#8090a3;font-size:12px">© 2026 Elison Borges · Todos os direitos reservados</footer></main>
+<main id="app" class="wrap"><div class="top"><div><h1>Minhas turmas e projetos</h1><div class="muted" id="welcome"></div></div><span class="badge">ACESSO DO PROFESSOR</span></div><div class="workspace"><aside class="side"><div id="projectName" class="projectTitle">Projeto</div><h3>🏫 Turmas</h3><div id="classNav"></div><button class="btn" style="width:100%;margin-top:14px;white-space:normal" onclick="document.getElementById('rosterCheck').scrollIntoView({behavior:'smooth',block:'start'})">📋 Conferir entregas por turma</button></aside><section class="deliveryMain"><div id="deliveryView" class="deliveryView"><div class="deliveryHead"><h2>📥 Entregas recebidas</h2><div class="reportActions"><button class="btn reportBtn" onclick="openReport()">📊 Relatório</button><button class="btn reportBtn" style="margin-left:8px" onclick="document.getElementById('rosterCheck').scrollIntoView({behavior:'smooth',block:'start'})">📋 Conferir entregas</button></div></div><div id="filters" class="filters"></div><div id="bulkPublishBar" style="display:none;background:#edf7f4;border:1px solid #a6d6c5;border-radius:10px;padding:12px;margin:12px 0"><label style="display:inline-flex;align-items:center;gap:7px;margin:0"><input type="checkbox" id="bulkSelectAll" onchange="toggleAllApproved(this.checked)" style="width:auto"> Selecionar todas as aprovadas neste filtro</label><span id="bulkCount" style="margin:0 10px;font-size:13px">0 selecionadas</span><button class="btn publish" id="bulkPublishBtn" onclick="publishSelected()" disabled>📚 Publicar selecionadas</button><p class="muted" style="margin:7px 0 0">A publicação depende da liberação da Biblioteca Digital pela Administração. Apenas obras aprovadas serão processadas.</p></div><div id="reviewSuccessNotice" role="status" aria-live="polite" style="display:none;background:#e4f7ee;border-left:5px solid #087b61;color:#075c43;border-radius:8px;padding:14px 16px;margin:12px 0 16px;line-height:1.6"></div><div id="deliveries" class="deliveries"><div class="loading">Carregando entregas...</div></div></div><div id="report" class="report"></div></section></div><section id="rosterCheck" style="background:white;border:1px solid #d6e1eb;border-radius:14px;padding:18px;margin-top:18px"><h2>📋 Conferência de Entregas por Turma</h2><p class="muted">Listas privadas carregadas automaticamente. Dados transcritos: confira possíveis divergências antes de cobrar alunos.</p><select id="rosterClass" onchange="renderRosterCheck()" style="display:block;margin:12px 0"></select><button class="btn soft" id="scanPdfBtn" onclick="scanRosterPdfs()">🔎 Conferir nomes nos PDFs</button><p id="pdfScanStatus" class="muted" role="status">Leitura privada, iniciada sob demanda.</p><div id="rosterResult">Carregando listas privadas...</div></section><footer id="teacherFooter" style="text-align:center;margin:28px 0 8px;color:#8090a3;font-size:12px">© 2026 Elison Borges · Todos os direitos reservados</footer></main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
 const sb=supabase.createClient('https://wdlmfjxyuwgdiyukmpir.supabase.co','sb_publishable_F2HfP-vkw7rLYSP-5oPTzQ_XMe_9O86');
 const st=document.getElementById('status');function msg(t,ok=false){st.textContent=t;st.style.color=ok?'#087b61':'#b42318'}
@@ -75,6 +75,40 @@ let rosterStudents=[];
 function rosterNorm(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z ]/g,' ').replace(/\s+/g,' ').trim()}
 async function importRoster(ev){try{const f=ev.target.files[0];if(!f)return;if(f.size>1048576)throw Error('Arquivo muito grande');const d=JSON.parse(await f.text());if(!Array.isArray(d.alunos))throw Error('Lista inválida');rosterStudents=d.alunos.filter(a=>a&&typeof a.nome_completo==='string'&&/^[A-E]$/i.test(a.turma||'')&&Number.isInteger(Number(a.numero)));renderRosterCheck()}catch(e){rosterStudents=[];document.getElementById('rosterResult').textContent='Falha: '+e.message}}
 async function loadPrivateRoster(){const box=document.getElementById('rosterResult');const ids=[...new Set(assignments.map(a=>a.class_id))];if(!ids.length){box.textContent='Nenhuma turma atribuída.';return}const {data,error}=await sb.from('class_roster_students').select('class_id,student_number,full_name,verification_status').in('class_id',ids);if(error){box.textContent='Não foi possível carregar as listas privadas: '+error.message;return}storedRosterStudents=data||[];renderRosterCheck()}
+let pdfEvidence=new Map(),pdfScanning=false;
+async function scanRosterPdfs(){
+ if(pdfScanning)return;
+ const sel=document.getElementById('rosterClass'),cid=sel.value,info=document.getElementById('pdfScanStatus'),btn=document.getElementById('scanPdfBtn');
+ const ds=allDeliveries.filter(d=>d.class_id===cid);
+ if(!ds.length){info.textContent='Nenhuma entrega nesta turma.';return}
+ const {data:{session}}=await sb.auth.getSession();
+ if(!session){info.textContent='Faça login novamente.';return}
+ pdfScanning=true;btn.disabled=true;
+ let ok=0,errors=0;const found=new Map();
+ try{
+  const lib=await import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs');
+  lib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs';
+  const roster=storedRosterStudents.filter(x=>x.class_id===cid);
+  for(const d of ds){
+   if(sel.value!==cid)break;
+   info.textContent='Lendo '+(ok+errors+1)+' de '+ds.length+' PDFs...';
+   try{
+    const res=await fetch('https://wdlmfjxyuwgdiyukmpir.supabase.co/functions/v1/teacher-submission-pdf',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token,'apikey':'sb_publishable_F2HfP-vkw7rLYSP-5oPTzQ_XMe_9O86'},body:JSON.stringify({submission_id:d.id})});
+    const obj=await res.json();if(!res.ok||!obj.url)throw Error(obj.error||'PDF indisponível');
+    const pdf=await lib.getDocument({url:obj.url}).promise;let raw='';
+    for(let p=1;p<=Math.min(4,pdf.numPages);p++){const page=await pdf.getPage(p);const content=await page.getTextContent();raw+=' '+content.items.map(x=>x.str||'').join(' ')}
+    await pdf.destroy();const text=' '+rosterNorm(raw)+' ';
+    for(const a of roster){const name=rosterNorm(a.full_name);if(name.split(' ').length<2)continue;
+     if(text.includes(' '+name+' ')){const key=cid+':'+a.student_number;if(!found.has(key))found.set(key,new Set());found.get(key).add(d.protocol||d.id)}
+    }ok++;
+   }catch(e){errors++;console.warn('Falha na leitura',d.id,e.message)}
+  }
+  for(const [key,protocols] of found)pdfEvidence.set(key,[...protocols]);
+  info.textContent='Concluído: '+ok+' PDFs lidos; '+errors+' falhas; '+found.size+' nomes completos localizados. Verifique a autoria antes de confirmar.';
+  renderRosterCheck();
+ }catch(e){info.textContent='Não foi possível ler os PDFs: '+e.message}
+ finally{pdfScanning=false;btn.disabled=false}
+}
 function renderRosterCheck(){
  const sel=document.getElementById('rosterClass');if(!sel)return;
  const prev=sel.value;
@@ -93,7 +127,8 @@ function renderRosterCheck(){
   const candidates=pairs.filter(p=>match(a.norm,p.name));
   const firstName=a.norm.split(' ')[0];
   const legacyMatches=pairs.filter(p=>p.name===firstName&&p.name.split(' ').length===1);
-  const protocols=[...new Set([...candidates,...legacyMatches].map(p=>p.protocol))];
+  const pdfProtocols=pdfEvidence.get(sel.value+':'+a.numero)||[];
+  const protocols=[...new Set([...candidates,...legacyMatches].map(p=>p.protocol).concat(pdfProtocols))];
   const sameNameStudents=students.filter(x=>x.norm===a.norm).length;
   const uniqueExact=exact.length>0&&sameNameStudents===1;
   const partial=candidates.filter(p=>p.name!==a.norm);
@@ -101,7 +136,8 @@ function renderRosterCheck(){
   const hasLegacy=legacyMatches.length>0;
   const status=uniqueExact?'Identificada':(exact.length||partial.length)?'Conferência manual':hasLegacy?'Possível entrega — formulário antigo':'Não identificada';
   const firstNameCount=students.filter(x=>x.norm.split(' ')[0]===firstName).length;
-  const note=uniqueExact?(protocols.length>1?'Múltiplos trabalhos registrados':'Nome completo correspondente'):partialUnambiguous?'Nome abreviado; confirmar integrante':(exact.length||partial.length)?'Nome semelhante ou ambíguo':hasLegacy?(firstNameCount>1?'Primeiro nome compartilhado por '+firstNameCount+' alunos; confirmar grupo':'Apenas primeiro nome registrado; confirmar grupo'):'Nenhum integrante correspondente';
+  const noteBase=uniqueExact?(protocols.length>1?'Múltiplos trabalhos registrados':'Nome completo correspondente'):partialUnambiguous?'Nome abreviado; confirmar integrante':(exact.length||partial.length)?'Nome semelhante ou ambíguo':hasLegacy?(firstNameCount>1?'Primeiro nome compartilhado por '+firstNameCount+' alunos; confirmar grupo':'Apenas primeiro nome registrado; confirmar grupo'):'Nenhum integrante correspondente';
+  const note=noteBase+(pdfProtocols.length?' · Nome completo encontrado no PDF; conferir autoria':'');
   if(status==='Identificada')ok++;else if(status==='Conferência manual')review++;else if(hasLegacy)legacy++;else missing++;
   if(uniqueExact&&protocols.length>1)duplicates++;
   return '<tr><td>'+esc(a.numero)+'</td><td>'+esc(a.nome_completo)+'</td><td>'+esc(status)+'</td><td>'+esc(note)+'</td><td>'+esc(protocols.join(', '))+'</td></tr>'
