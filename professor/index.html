@@ -87,21 +87,25 @@ function renderRosterCheck(){
  const students=storedRosterStudents.filter(a=>a.class_id===sel.value).map(a=>({numero:a.student_number,nome_completo:a.full_name,verification_status:a.verification_status,norm:rosterNorm(a.full_name)})).sort((a,b)=>a.numero-b.numero);
  const pairs=allDeliveries.filter(d=>d.class_id===sel.value).flatMap(d=>memberRows.filter(m=>m.submission_id===d.id).map(m=>({name:rosterNorm(m.first_name),original:m.first_name,protocol:d.protocol||d.id}))).filter(x=>x.name);
  const match=(student,member)=>{if(student===member)return 'exact';const st=student.split(' '),mt=member.split(' ');if(mt.length<2||st.length<2)return null;if(mt.length<=st.length&&mt.every((w,i)=>w===st[i]))return 'partial';if(st.length<=mt.length&&st.every((w,i)=>w===mt[i]))return 'partial';if(mt[0]===st[0]&&mt[mt.length-1]===st[st.length-1]&&mt.length>=2)return 'partial';return null};
- let ok=0,review=0,missing=0,duplicates=0;
+ let ok=0,review=0,legacy=0,missing=0,duplicates=0;
  const rows=students.map(a=>{
   const exact=pairs.filter(p=>p.name===a.norm);
   const candidates=pairs.filter(p=>match(a.norm,p.name));
-  const protocols=[...new Set(candidates.map(p=>p.protocol))];
+  const firstName=a.norm.split(' ')[0];
+  const legacyMatches=pairs.filter(p=>p.name===firstName&&p.name.split(' ').length===1);
+  const protocols=[...new Set([...candidates,...legacyMatches].map(p=>p.protocol))];
   const sameNameStudents=students.filter(x=>x.norm===a.norm).length;
   const uniqueExact=exact.length>0&&sameNameStudents===1;
   const partial=candidates.filter(p=>p.name!==a.norm);
   const partialUnambiguous=partial.length>0&&partial.every(p=>students.filter(x=>match(x.norm,p.name)).length===1);
-  const status=uniqueExact?'Identificada':(exact.length||partial.length)?'Conferência manual':'Não identificada';
-  const note=uniqueExact?(protocols.length>1?'Múltiplos trabalhos registrados':'Nome completo correspondente'):partialUnambiguous?'Nome abreviado; confirmar integrante':(exact.length||partial.length)?'Nome semelhante ou ambíguo':'Nenhum integrante correspondente';
-  if(status==='Identificada')ok++;else if(status==='Conferência manual')review++;else missing++;
+  const hasLegacy=legacyMatches.length>0;
+  const status=uniqueExact?'Identificada':(exact.length||partial.length)?'Conferência manual':hasLegacy?'Possível entrega — formulário antigo':'Não identificada';
+  const firstNameCount=students.filter(x=>x.norm.split(' ')[0]===firstName).length;
+  const note=uniqueExact?(protocols.length>1?'Múltiplos trabalhos registrados':'Nome completo correspondente'):partialUnambiguous?'Nome abreviado; confirmar integrante':(exact.length||partial.length)?'Nome semelhante ou ambíguo':hasLegacy?(firstNameCount>1?'Primeiro nome compartilhado por '+firstNameCount+' alunos; confirmar grupo':'Apenas primeiro nome registrado; confirmar grupo'):'Nenhum integrante correspondente';
+  if(status==='Identificada')ok++;else if(status==='Conferência manual')review++;else if(hasLegacy)legacy++;else missing++;
   if(uniqueExact&&protocols.length>1)duplicates++;
   return '<tr><td>'+esc(a.numero)+'</td><td>'+esc(a.nome_completo)+'</td><td>'+esc(status)+'</td><td>'+esc(note)+'</td><td>'+esc(protocols.join(', '))+'</td></tr>'
  }).join('');
- box.innerHTML='<p><b>'+students.length+' alunos</b> · '+ok+' identificados · '+review+' para revisão · '+missing+' sem correspondência. '+duplicates+' alunos identificados em múltiplos trabalhos.</p><p class="muted">Nomes abreviados ou ambíguos exigem confirmação. As listas ainda estão em revisão. Sem correspondência não comprova falta de entrega.</p><div style="overflow:auto"><table style="width:100%;text-align:left"><thead><tr><th>Nº</th><th>Aluno(a)</th><th>Situação</th><th>Observação</th><th>Protocolo(s)</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+ box.innerHTML='<p><b>'+students.length+' alunos</b> · '+ok+' identificados · '+review+' para revisão · '+legacy+' possíveis entregas (formulário antigo) · '+missing+' sem correspondência. '+duplicates+' alunos identificados em múltiplos trabalhos.</p><p class="muted">Registros com apenas o primeiro nome são possibilidades, nunca confirmação automática. Nomes iguais podem corresponder a pessoas diferentes. Listas em revisão; sem correspondência não comprova falta de entrega.</p><div style="overflow:auto"><table style="width:100%;text-align:left"><thead><tr><th>Nº</th><th>Aluno(a)</th><th>Situação</th><th>Observação</th><th>Protocolo(s)</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 </script></body></html>
