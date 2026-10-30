@@ -116,12 +116,12 @@ function exportRosterPendingCsv(){
  const pending=rows.filter(r=>r[2]!=='Identificada');
  if(!pending.length){alert('Não há pendências nesta turma.');return}
  const headers=['Nº','Aluno(a)','Situação','Observação','Protocolo(s)'];
- const safe=v=>{let x=String(v??'');if(/^[\\s]*[=+@-]/.test(x))x="'"+x;return '"'+x.replace(/"/g,'""')+'"'};
- const lines=[headers,...pending].map(row=>row.map(safe).join(';')).join('\\r\\n');
- const csv='\\ufeff'+lines;
+ const safe=v=>{let x=String(v??'');if(/^[\s]*[=+@-]/.test(x))x="'"+x;return '"'+x.replace(/"/g,'""')+'"'};
+ const lines=[headers,...pending].map(row=>row.map(safe).join(';')).join('\r\n');
+ const csv='\ufeff'+lines;
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
  const url=URL.createObjectURL(blob),a=document.createElement('a');
- const turma=sel.options[sel.selectedIndex]?.textContent.match(/6º\\s*([A-E])/i)?.[1]||'turma';
+ const turma=sel.options[sel.selectedIndex]?.textContent.match(/6º\s*([A-E])/i)?.[1]||'turma';
  a.href=url;a.download='pendencias-entregas-6'+turma+'-'+new Date().toISOString().slice(0,10)+'.csv';
  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
